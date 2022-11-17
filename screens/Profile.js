@@ -10,8 +10,11 @@ import {
   Switch
 } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
-import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
+
+import * as SplashScreen from 'expo-splash-screen';
+
+SplashScreen.preventAutoHideAsync();
 
 import firebase from "firebase";
 
@@ -63,7 +66,6 @@ export default class Profile extends Component {
       .on("value", function (snapshot) {
         theme = snapshot.val().current_theme;
         name = `${snapshot.val().first_name} ${snapshot.val().last_name}`;
-        image = snapshot.val().profile_picture;
       });
     this.setState({
       light_theme: theme === "light" ? true : false,
@@ -74,9 +76,8 @@ export default class Profile extends Component {
   }
 
   render() {
-    if (!this.state.fontsLoaded) {
-      return <AppLoading />;
-    } else {
+    if (this.state.fontsLoaded) {
+      SplashScreen.hideAsync();
       return (
         <View style={styles.container}>
           <SafeAreaView style={styles.droidSafeArea} />
@@ -94,7 +95,7 @@ export default class Profile extends Component {
           <View style={styles.screenContainer}>
             <View style={styles.profileImageContainer}>
               <Image
-                source={{ uri: this.state.profile_image }}
+                source={require("../assets/profile_img.png")}
                 style={styles.profileImage}
               ></Image>
               <Text style={styles.nameText}>{this.state.name}</Text>
