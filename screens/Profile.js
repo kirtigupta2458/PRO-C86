@@ -29,7 +29,6 @@ export default class Profile extends Component {
       fontsLoaded: false,
       isEnabled: false,
       light_theme: true,
-      profile_image: "",
       name: ""
     };
   }
@@ -70,8 +69,7 @@ export default class Profile extends Component {
     this.setState({
       light_theme: theme === "light" ? true : false,
       isEnabled: theme === "light" ? false : true,
-      name: name,
-      profile_image: image
+      name: name
     });
   }
 
